@@ -20,7 +20,6 @@ class lista:
         if self.head:
             item = No(elem)
             anterior = self.head
-            # anterior.next = item       ## não vai ser necessario pq a lista não será circular
             self.head = item
             item.next = anterior
             self.next = anterior
@@ -65,7 +64,7 @@ def mult(v1=lista(), v2=lista()):
      
     tam1 = v1.tamanho()     # pegando o tomanho da lista 1
     tam2 = v2.tamanho()
-    print(tam1 ,tam2)
+    
     up = 0
     valor = 0
     # vai até o inicio da pilha.
@@ -76,13 +75,8 @@ def mult(v1=lista(), v2=lista()):
         v1 = v1_head.inicio()
         
         for j in range(tam1):
-            if up != 0:     
-                print ("numero v2 e numero v1")
-                print(v2.data , v1.data)                # a variavel up simboliza 'sobe um'
+            if up != 0:     # a variavel up simboliza 'sobe um'               
                 valor = v1.data * v2.data
-                print (valor)
-                print ("up")
-                print(up)
                 valor += up
                 
                 if valor > 99:
@@ -91,46 +85,38 @@ def mult(v1=lista(), v2=lista()):
                 else:
                     up = 0
             else:
-                print ("numero v2 e numero v1")
-                print(v2.data , v1.data) 
                 valor = (v2.data * v1.data)
                 if valor > 99:
                     up = int(valor/100)
                     valor = valor - (up*100)
                 else:
                     up =0
-                print(valor)
 
-
-            v1 = v1.back
+            v1 = v1.back            # aponta para o proximo numero a esquerda.
             if i >=1:
-                resultado = result_inic.inicio_result(cont)
-                if  resultado.back != None:
+                resultado = result_inic.inicio_result(cont)     # aponta para a posição 'cont' dentro da lista resultado
+                if  resultado.back != None:                     # quando a multiplicação estrapola 2 digitos deve ser criado uma nova posição na lista
+                                                                # no caso de já haver um numero na possição apontada devesse soma-ló ao resultado da multiplicação 
                     valor_anterior = resultado.data
-                    print("segunda volta")
-                    print(valor_anterior)
                     valor+=valor_anterior
-                    print(valor)
                     
                     if valor > 99:
                         up2 = int(valor/100)
                         valor = valor - (up2*100) 
                         up+=up2
-                   
                     resultado.data = valor
-                    #resultado = resultado.back
-                else:
+                    
+                else:                                       
                     valor_anterior = resultado.data
-                    print("segunda volta")
-                    print(valor_anterior)
                     valor+=valor_anterior
-                    print(valor)
+                   
                     if valor > 99:
                         up2 = int(valor/100)
                         valor = valor - (up2*100) 
                         up+=up2
 
                     resultado.data = valor
+                    # o número que sobe no final da multiplicação será adicionado na lista em uma nova posição.
                     if up>0:
                         result_inic.add(up)
                         up = 0
@@ -142,17 +128,16 @@ def mult(v1=lista(), v2=lista()):
             #ultima execução do laço interno
         
         if up != 0 :
-            print("aqui guardo o ultimo up")
             result_inic.add(up)
             up = 0
-        
         
         result_inic.print()    
         v2 = v2.back
         #ultima execução do laço externo
 
        
-    
+    # divisão em 2 digitos dos números  passados para multiplicação.
+    # guardando eles em listadas duplamente encadeadas.
 def montagem(valor1, lista, tamanho) -> None:
     i = -1
     if tamanho %2 != 0:
